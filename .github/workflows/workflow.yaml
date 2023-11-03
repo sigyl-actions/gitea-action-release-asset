@@ -1,0 +1,35 @@
+---
+name: Test
+on: [push]
+
+jobs:
+  build:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - run: npm i
+      - run: pwd
+      - run: ls
+      - uses: ./
+        id: one
+        with:
+          repository: gitea/tea
+          serverUrl: https://gitea.com/
+      - run: echo ${{ steps.one.outputs.release }} ${{ steps.one.outputs.id }} ${{ steps.one.outputs.description }}
+      - uses: ./
+        id: two
+        with:
+          repository: gitea/tea
+          serverUrl: https://gitea.com/
+          excludes: preRelease, draft
+      - run: echo ${{ steps.two.outputs.release }} ${{ steps.two.outputs.id }} ${{ steps.two.outputs.description }}
+      - uses: ./
+        id: three
+        with:
+          repository: gitea/tea
+          serverUrl: https://gitea.com/
+          token: ${{ github.token }}
+      - run: echo ${{ steps.three.outputs.release }} ${{ steps.three.outputs.id }} ${{ steps.three.outputs.description }}
+      

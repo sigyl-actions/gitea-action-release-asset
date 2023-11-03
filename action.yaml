@@ -1,0 +1,24 @@
+---
+name: gitea-action-release-asset
+description: >-
+  add an asset to a release
+branding:
+  icon: package
+  color: green
+inputs:
+  serverUrl:
+    description: the Url of the gitea API
+  repository:
+    description: 'The repository name in full'
+  id:
+    description: the id of the release
+  asset:
+    description: path to asset
+  asset-name:
+    description: name of asset
+  token:
+    description: 'The gitea token or personal access token'
+    required: false
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
